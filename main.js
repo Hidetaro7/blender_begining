@@ -9,7 +9,9 @@ import GUI from "lil-gui";
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0xffffff, 1);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+//renderer.setClearColor(0xffffff, 1);
 document.body.appendChild(renderer.domElement);
 let clock = new THREE.Clock();
 const camera = new THREE.PerspectiveCamera(
@@ -22,16 +24,22 @@ camera.position.set(100, 100, 200);
 
 const scene = new THREE.Scene();
 
-const ambientLight = new THREE.AmbientLight();
-scene.add(ambientLight);
+const directionalLight = new THREE.SpotLight(0xffffff, 1);
+directionalLight.castShadow = true;
+scene.add(directionalLight);
+directionalLight.position.set(0, 50, 80);
+const helper = new THREE.SpotLightHelper(directionalLight, 50);
+scene.add(helper);
+directionalLight.shadow.mapSize.width = 2048;
+directionalLight.shadow.mapSize.height = 2048;
 
 const groundGeometry = new THREE.PlaneGeometry(1000, 1000, 100, 100);
-const groundMaterial = new THREE.MeshBasicMaterial({
+const groundMaterial = new THREE.MeshStandardMaterial({
   color: 0x33ff66,
-  wireframe: true,
 });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotation.x = (-90 * Math.PI) / 180;
+ground.receiveShadow = true;
 scene.add(ground);
 
 let mixer;
@@ -46,6 +54,13 @@ fbxLoader.load(
     mixer = new THREE.AnimationMixer(object);
     const animationAction = mixer.clipAction(object.animations[0]);
     object.scale.set(0.05, 0.05, 0.05);
+    // 参考: https://stackoverflow.com/questions/63187764/switch-off-lights-a-fbx-model-in-threejs
+    object.traverse(function (child) {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
     animationActions.push(animationAction);
     animationsFolder.add(animations, "idle");
     activeAction = animationActions[0];
@@ -61,6 +76,13 @@ fbxLoader.load(
         const animationAction = mixer.clipAction(object.animations[0]);
         animationActions.push(animationAction);
         animationsFolder.add(animations, "run");
+
+        fbxLoader.load("models/laying.fbx", (object) => {
+          console.log("loaded laying");
+          const animationAction = mixer.clipAction(object.animations[0]);
+          animationActions.push(animationAction);
+          animationsFolder.add(animations, "laying");
+        });
       });
     });
   },
@@ -85,6 +107,9 @@ const animations = {
   },
   run: function () {
     setAction(animationActions[2]);
+  },
+  laying: function () {
+    setAction(animationActions[3]);
   },
 };
 
