@@ -138,14 +138,6 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-gamepad.js@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/gamepad.js/-/gamepad.js-1.0.4.tgz#efc42bb17408e8fd61eb36c6cf00033f65694884"
-  integrity sha512-z52m4ud278y2k+NdaMQXau/DWALdh8f1P67TObfEaCnaHlgTG9giuef1qR+JrmdO09v/z3eK0npoYb+6jkguvw==
-  dependencies:
-    option-resolver.js "^1.0.0"
-    tom32i-event-emitter.js "^2.0.5"
-
 has@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
@@ -169,11 +161,6 @@ nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
-
-option-resolver.js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/option-resolver.js/-/option-resolver.js-1.0.0.tgz#510538ac2403d73d52e37334b6e22b39fc77f3a7"
-  integrity sha512-HDb5ynQn8UFRCnUdyTALLvdmjbIpgwmy46NxZP0bsZ5VK1NIc6y2RAkahKRKJE+jKesu3YnO3CqlN21zV/psUQ==
 
 path-parse@^1.0.7:
   version "1.0.7"
@@ -229,11 +216,6 @@ three@^0.140.2:
   version "0.140.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.140.2.tgz#ca0b7390d1ce4f7f2850e80afd00ef48fc244491"
   integrity sha512-DdT/AHm/TbZXEhQKQpGt5/iSgBrmXpjU26FNtj1KhllVPTKj1eG4X/ShyD5W2fngE+I1s1wa4ttC4C3oCJt7Ag==
-
-tom32i-event-emitter.js@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/tom32i-event-emitter.js/-/tom32i-event-emitter.js-2.0.5.tgz#b013d5a9f67d0ce2e370b353b55688c2041265f2"
-  integrity sha512-7wYTrHfV3gWRZXZQniMLOO5hh01szsTVulTWwcNheESvRUrveQCKKEz2YMceYQZdfpmXMC8PGpzOpUcnfXSXiw==
 
 vite@^2.9.9:
   version "2.9.9"

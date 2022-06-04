@@ -6,40 +6,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import GUI from "lil-gui";
-import { GamepadListener } from "gamepad.js";
+import { axes } from "./gamepad";
 
-const playerControl = { axis: { rotate: 0, translate: 0 }, pose: 0 };
-
-const listener = new GamepadListener({
-  deadZone: 0.1,
-});
-listener.start();
-listener.on("gamepad:axis", function (event) {
-  if (event.detail.stick === 0) {
-    const ax = event.detail.gamepad.axes;
-    //角度のための数値を取得
-    if (event.detail.axis === 0) {
-      playerControl.axis.rotate = -event.detail.value;
-    }
-
-    //移動のための数値を取得
-    if (event.detail.axis === 1) {
-      playerControl.axis.translate = -event.detail.value;
-      if (Math.abs(event.detail.value) === 0) {
-        setAction(animationActions[0]);
-      } else if (Math.abs(event.detail.value) < 0.4) {
-        setAction(animationActions[1]);
-      } else {
-        setAction(animationActions[2]);
-      }
-    }
-    // 左スティック
-  }
-  /* console.log("stick: " + event.detail.stick); */
-  console.log("axis: " + event.detail.axis);
-  console.log("value: " + event.detail.value);
-  /* console.log(event.detail.gamepad.axes); */
-});
+const playerControl = { axis: axes, pose: 0 };
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -54,7 +23,7 @@ const camera = new THREE.PerspectiveCamera(
   1,
   500
 );
-camera.position.set(50, 200, 200);
+camera.position.set(50, 100, 200);
 
 const scene = new THREE.Scene();
 
@@ -174,9 +143,17 @@ function tick() {
     mixer.update(clock.getDelta());
   }
   controls.update();
-  if (playerControl.axis && playerMesh) {
-    playerMesh.rotateY(playerControl.axis.rotate * 0.02);
-    playerMesh.translateZ(playerControl.axis.translate * 0.7);
+  if (playerMesh && playerControl.axis.length) {
+    const ax = Math.abs(playerControl.axis[1]);
+    if (ax > 0.4) {
+      setAction(animationActions[2]);
+    } else if (ax > 0) {
+      setAction(animationActions[1]);
+    } else {
+      setAction(animationActions[0]);
+    }
+    playerMesh.rotateY(playerControl.axis[0] * -0.1);
+    playerMesh.translateZ(playerControl.axis[1] * -2);
   }
   renderer.render(scene, camera);
 }
