@@ -76,17 +76,22 @@ export class Player extends THREE.Object3D {
     if (this._mixer) {
       this._mixer.update(this.clock.getDelta());
     }
-    if (this.playerControl.axis.length) {
-      const ax = Math.abs(this.playerControl.axis[1]);
-      if (ax > 0.4) {
+    const axes = this.playerControl.axis;
+    if (axes.length) {
+      const ax = Math.abs(axes[1]);
+      if (ax > 0.6) {
         this.setAction(this.animationActions[2]);
       } else if (ax > 0) {
         this.setAction(this.animationActions[1]);
       } else {
         this.setAction(this.animationActions[0]);
       }
-      this.rotateY(this.playerControl.axis[0] * -0.1);
-      this.translateZ(this.playerControl.axis[1] * -2);
+      this.rotateY(axes[0] * -0.08);
+      if (Math.abs(axes[0]) < 0.01) {
+        this.translateZ(axes[1] * -2);
+      } else {
+        this.translateZ(axes[1] * -1);
+      }
     }
   }
 }
