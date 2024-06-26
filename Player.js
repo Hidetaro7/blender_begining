@@ -17,7 +17,7 @@ export class Player extends THREE.Object3D {
     const fbxLoader = new FBXLoader();
 
     fbxLoader.load(
-      "/models/idle.fbx",
+      "/blender_begining/models/idle.fbx",
       (object) => {
         const mixer = new THREE.AnimationMixer(object);
         this._mixer = mixer;
@@ -34,16 +34,16 @@ export class Player extends THREE.Object3D {
         this.animationActions.push(animationAction);
         this.activeAction = this.animationActions[0];
         this.activeAction.play();
-        fbxLoader.load("/models/walk.fbx", (object) => {
+        fbxLoader.load("/blender_begining/models/walk.fbx", (object) => {
           console.log("loaded walk");
           const animationAction = mixer.clipAction(object.animations[0]);
           this.animationActions.push(animationAction);
-          fbxLoader.load("/models/run.fbx", (object) => {
+          fbxLoader.load("/blender_begining/models/run.fbx", (object) => {
             console.log("loaded run");
             const animationAction = mixer.clipAction(object.animations[0]);
             this.animationActions.push(animationAction);
 
-            fbxLoader.load("/models/laying.fbx", (object) => {
+            fbxLoader.load("/blender_begining/models/laying.fbx", (object) => {
               console.log("loaded laying");
               const animationAction = mixer.clipAction(object.animations[0]);
               this.animationActions.push(animationAction);
